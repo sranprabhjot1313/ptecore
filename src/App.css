@@ -1,0 +1,278 @@
+:root {
+  --primary: #6366f1;
+  --primary-dark: #3730a3;
+  --bg: #f3f4f6;
+  --surface: #fff;
+  --border: #e5e7eb;
+  --text: #1e293b;
+  --text-light: #64748b;
+  --success: #16a34a;
+  --error: #dc2626;
+  --radius: 14px;
+  --shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  min-height: 100vh;
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+.main-nav {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 1.2rem 0 1.1rem 0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.main-nav button {
+  background: none;
+  border: none;
+  font-size: 1.13rem;
+  padding: 0.6rem 2.2rem;
+  cursor: pointer;
+  border-radius: var(--radius);
+  color: var(--text-light);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition: background 0.2s, color 0.2s;
+}
+.main-nav button.active,
+.main-nav button:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2.5rem 1rem 2rem 1rem;
+}
+
+.practice-screen,
+.manage-words-screen {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 2.2rem 2rem 2rem 2rem;
+  min-width: 320px;
+  max-width: 420px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+  letter-spacing: 0.01em;
+  margin-bottom: 1.2rem;
+}
+
+.add-word-form {
+  display: flex;
+  gap: 0.7rem;
+  margin-bottom: 1.2rem;
+}
+.add-word-form input {
+  flex: 1;
+  padding: 0.6rem;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  font-size: 1.05rem;
+  background: #f8fafc;
+  transition: border 0.2s;
+}
+.add-word-form input:focus {
+  border: 1.5px solid var(--primary);
+  outline: none;
+  background: #fff;
+}
+.add-word-form button {
+  padding: 0.6rem 1.3rem;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.05rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.add-word-form button:hover {
+  background: var(--primary-dark);
+}
+.words-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.2rem 0;
+}
+.words-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.4rem 0;
+}
+.words-list input[type="text"] {
+  flex: 1;
+  padding: 0.4rem;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  font-size: 1.05rem;
+  background: #f8fafc;
+  transition: border 0.2s;
+}
+.words-list input[type="text"]:focus {
+  border: 1.5px solid var(--primary);
+  outline: none;
+  background: #fff;
+}
+.words-list button {
+  padding: 0.3rem 0.9rem;
+  background: var(--bg);
+  color: var(--primary-dark);
+  border: none;
+  border-radius: 6px;
+  font-size: 0.98rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.words-list button:hover {
+  background: var(--primary);
+  color: #fff;
+}
+.error-msg {
+  color: var(--error);
+  margin-bottom: 0.7rem;
+  font-size: 1.01rem;
+}
+.words-count {
+  margin-top: 1.2rem;
+  color: var(--text-light);
+  font-size: 1.01rem;
+  text-align: right;
+}
+.practice-controls {
+  display: flex;
+  gap: 1.1rem;
+  margin-bottom: 1.2rem;
+}
+.practice-controls button {
+  padding: 0.6rem 1.3rem;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.05rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.practice-controls button:hover {
+  background: var(--primary-dark);
+}
+.practice-form {
+  display: flex;
+  gap: 0.7rem;
+  margin-bottom: 1.2rem;
+}
+.practice-form input[type="text"] {
+  flex: 1;
+  padding: 0.6rem;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  font-size: 1.05rem;
+  background: #f8fafc;
+  transition: border 0.2s;
+}
+.practice-form input[type="text"]:focus {
+  border: 1.5px solid var(--primary);
+  outline: none;
+  background: #fff;
+}
+.practice-form button {
+  padding: 0.6rem 1.3rem;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.05rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.practice-form button:disabled {
+  background: #a5b4fc;
+  cursor: not-allowed;
+}
+.feedback {
+  margin-bottom: 1.2rem;
+  font-size: 1.13rem;
+  font-weight: 600;
+}
+.feedback.correct {
+  color: var(--success);
+}
+.feedback.incorrect {
+  color: var(--error);
+}
+.next-btn {
+  padding: 0.6rem 1.3rem;
+  background: var(--bg);
+  color: var(--primary-dark);
+  border: none;
+  border-radius: 6px;
+  font-size: 1.05rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 1.2rem;
+  transition: background 0.2s, color 0.2s;
+}
+.next-btn:hover {
+  background: var(--primary);
+  color: #fff;
+}
+.progress {
+  color: var(--text-light);
+  margin-bottom: 0.7rem;
+  font-size: 1.01rem;
+}
+.cycle-status {
+  color: var(--primary);
+  font-size: 1.01rem;
+  min-height: 1.2em;
+}
+@media (max-width: 600px) {
+  .practice-screen,
+  .manage-words-screen {
+    padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+    min-width: 0;
+    max-width: 98vw;
+  }
+  main {
+    padding: 1.2rem 0.2rem 1.2rem 0.2rem;
+  }
+  .main-nav button {
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+  }
+}
