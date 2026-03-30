@@ -98,12 +98,14 @@ h2 {
   border: 1.5px solid var(--border);
   border-radius: 6px;
   font-size: 1.05rem;
+  color: var(--text);
   background: #f8fafc;
   transition: border 0.2s;
 }
 .add-word-form input:focus {
   border: 1.5px solid var(--primary);
   outline: none;
+  color: var(--text);
   background: #fff;
 }
 .add-word-form button {
@@ -137,12 +139,14 @@ h2 {
   border: 1.5px solid var(--border);
   border-radius: 6px;
   font-size: 1.05rem;
+  color: var(--text);
   background: #f8fafc;
   transition: border 0.2s;
 }
 .words-list input[type="text"]:focus {
   border: 1.5px solid var(--primary);
   outline: none;
+  color: var(--text);
   background: #fff;
 }
 .words-list button {
@@ -201,12 +205,14 @@ h2 {
   border: 1.5px solid var(--border);
   border-radius: 6px;
   font-size: 1.05rem;
+  color: var(--text);
   background: #f8fafc;
   transition: border 0.2s;
 }
 .practice-form input[type="text"]:focus {
   border: 1.5px solid var(--primary);
   outline: none;
+  color: var(--text);
   background: #fff;
 }
 .practice-form button {
