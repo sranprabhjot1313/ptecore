@@ -67,7 +67,8 @@ main {
 }
 
 .practice-screen,
-.manage-words-screen {
+.manage-words-screen,
+.wrong-words-screen {
   background: var(--surface);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
@@ -210,6 +211,12 @@ h2 {
   gap: 1.1rem;
   margin-bottom: 1.2rem;
 }
+.wrong-words-summary {
+  color: var(--text-light);
+  font-size: 1.01rem;
+  margin: -0.3rem 0 1rem;
+  text-align: left;
+}
 .practice-controls button {
   padding: 0.6rem 1.3rem;
   background: var(--primary);
@@ -287,6 +294,22 @@ h2 {
   background: var(--primary);
   color: #fff;
 }
+.clear-wrong-btn {
+  padding: 0.6rem 1.3rem;
+  background: var(--bg);
+  color: var(--error);
+  border: none;
+  border-radius: 6px;
+  font-size: 1.05rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.2s, color 0.2s;
+}
+.clear-wrong-btn:hover {
+  background: var(--error);
+  color: #fff;
+}
 .progress {
   color: var(--text-light);
   margin-bottom: 0.7rem;
@@ -299,7 +322,8 @@ h2 {
 }
 @media (max-width: 600px) {
   .practice-screen,
-  .manage-words-screen {
+  .manage-words-screen,
+  .wrong-words-screen {
     padding: 1.2rem 0.5rem 1.2rem 0.5rem;
     min-width: 0;
     max-width: 98vw;

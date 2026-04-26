@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import PracticeScreen from './PracticeScreen.jsx';
 import ManageWordsScreen from './ManageWordsScreen.jsx';
+import WrongWordsScreen from './WrongWordsScreen.jsx';
 import './App.css';
 
 function App() {
@@ -16,6 +17,18 @@ function App() {
           Practice
         </button>
         <button
+          className={screen === 'wrong-practice' ? 'active' : ''}
+          onClick={() => setScreen('wrong-practice')}
+        >
+          Wrong Practice
+        </button>
+        <button
+          className={screen === 'wrong-words' ? 'active' : ''}
+          onClick={() => setScreen('wrong-words')}
+        >
+          Wrong Words
+        </button>
+        <button
           className={screen === 'manage' ? 'active' : ''}
           onClick={() => setScreen('manage')}
         >
@@ -23,7 +36,10 @@ function App() {
         </button>
       </nav>
       <main>
-        {screen === 'practice' ? <PracticeScreen /> : <ManageWordsScreen />}
+        {screen === 'practice' && <PracticeScreen />}
+        {screen === 'wrong-practice' && <PracticeScreen mode="wrong" />}
+        {screen === 'wrong-words' && <WrongWordsScreen />}
+        {screen === 'manage' && <ManageWordsScreen />}
       </main>
     </div>
   );

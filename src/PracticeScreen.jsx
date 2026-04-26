@@ -1,5 +1,17 @@
 import React, { useState, useRef } from 'react';
-import { getWords, getCycle, saveCycle, getPosition, savePosition } from './storage';
+import {
+  addWrongWord,
+  getCycle,
+  getPosition,
+  getWords,
+  getWrongCycle,
+  getWrongPosition,
+  getWrongWords,
+  saveCycle,
+  savePosition,
+  saveWrongCycle,
+  saveWrongPosition,
+} from './storage';
 
 function shuffle(arr) {
   // Fisher-Yates shuffle
@@ -18,33 +30,60 @@ function speakWord(word) {
   window.speechSynthesis.speak(utter);
 }
 
-function PracticeScreen() {
-  const [words] = useState(() => getWords());
+function getPracticeConfig(mode) {
+  if (mode === 'wrong') {
+    return {
+      title: 'Practice Wrong Words',
+      emptyMessage: 'Wrong words will appear here after you miss them in practice.',
+      getSourceWords: getWrongWords,
+      getStoredCycle: getWrongCycle,
+      saveStoredCycle: saveWrongCycle,
+      getStoredPosition: getWrongPosition,
+      saveStoredPosition: saveWrongPosition,
+    };
+  }
+
+  return {
+    title: 'Practice Spelling',
+    emptyMessage: 'Add words in Manage Words to start practicing.',
+    getSourceWords: getWords,
+    getStoredCycle: getCycle,
+    saveStoredCycle: saveCycle,
+    getStoredPosition: getPosition,
+    saveStoredPosition: savePosition,
+  };
+}
+
+function PracticeScreen({ mode = 'all' }) {
+  const config = getPracticeConfig(mode);
+  const [wrongCount, setWrongCount] = useState(() => getWrongWords().length);
+  const [words] = useState(() => config.getSourceWords());
   const [cycle, setCycle] = useState(() => {
-    const storedWords = getWords();
-    const storedCycle = getCycle();
+    const storedWords = config.getSourceWords();
+    const storedCycle = config.getStoredCycle();
     if (!storedCycle || storedCycle.length !== storedWords.length || storedWords.length === 0) {
       const newCycle = shuffle(storedWords);
-      saveCycle(newCycle);
-      savePosition(0);
+      config.saveStoredCycle(newCycle);
+      config.saveStoredPosition(0);
       return newCycle;
     }
     return storedCycle;
   });
   const [pos, setPos] = useState(() => {
-    const storedWords = getWords();
-    const storedCycle = getCycle();
+    const storedWords = config.getSourceWords();
+    const storedCycle = config.getStoredCycle();
     if (!storedCycle || storedCycle.length !== storedWords.length || storedWords.length === 0) {
       return 0;
     }
-    return getPosition();
+    const storedPosition = config.getStoredPosition();
+    return storedPosition >= 0 && storedPosition < storedCycle.length ? storedPosition : 0;
   });
   const [input, setInput] = useState('');
   const [status, setStatus] = useState('idle'); // idle, correct, incorrect
   const inputRef = useRef();
 
   if (!words.length) {
-    return <div className="practice-screen"><h2>Practice Spelling</h2><p>Add words in Manage Words to start practicing.</p></div>;
+    return <div className="practice-screen"><h2>{config.title}</h2><p>{config.emptyMessage}</p></div>;
   }
 
   const currentWord = cycle[pos];
@@ -59,6 +98,8 @@ function PracticeScreen() {
     if (input.trim().toLowerCase() === currentWord.toLowerCase()) {
       setStatus('correct');
     } else {
+      const updatedWrongWords = addWrongWord(currentWord);
+      setWrongCount(updatedWrongWords.length);
       setStatus('incorrect');
     }
   };
@@ -70,11 +111,11 @@ function PracticeScreen() {
       // New cycle
       newCycle = shuffle(words);
       nextPos = 0;
-      saveCycle(newCycle);
+      config.saveStoredCycle(newCycle);
     }
     setCycle(newCycle);
     setPos(nextPos);
-    savePosition(nextPos);
+    config.saveStoredPosition(nextPos);
     setInput('');
     setStatus('idle');
     setTimeout(() => {
@@ -89,7 +130,12 @@ function PracticeScreen() {
 
   return (
     <div className="practice-screen">
-      <h2>Practice Spelling</h2>
+      <h2>{config.title}</h2>
+      {mode !== 'wrong' && (
+        <div className="wrong-words-summary">
+          Wrong words saved: {wrongCount}
+        </div>
+      )}
       <div className="practice-controls">
         <button onClick={handlePlay}>Play Word</button>
         <button onClick={handleRepeat}>Repeat Word</button>
