@@ -124,6 +124,19 @@ function PracticeScreen({ mode = 'all' }) {
     }, 300);
   };
 
+  const handlePrevious = () => {
+    const previousPos = pos === 0 ? total - 1 : pos - 1;
+
+    setPos(previousPos);
+    config.saveStoredPosition(previousPos);
+    setInput('');
+    setStatus('idle');
+    setTimeout(() => {
+      speakWord(cycle[previousPos]);
+      inputRef.current && inputRef.current.focus();
+    }, 300);
+  };
+
   const handleRepeat = () => {
     speakWord(currentWord);
   };
@@ -152,13 +165,20 @@ function PracticeScreen({ mode = 'all' }) {
         />
         <button type="submit" disabled={status === 'correct'}>Check Answer</button>
       </form>
-      {status === 'correct' && <div className="feedback correct">Correct!</div>}
+      {status === 'correct' && (
+        <div className="feedback correct">
+          Correct! Word: <strong>{currentWord}</strong>
+        </div>
+      )}
       {status === 'incorrect' && (
         <div className="feedback incorrect">
           Incorrect. Correct spelling: <strong>{currentWord}</strong>
         </div>
       )}
-      <button className="next-btn" onClick={handleNext}>Next Word</button>
+      <div className="word-nav-controls">
+        <button className="next-btn" onClick={handlePrevious}>Previous Word</button>
+        <button className="next-btn" onClick={handleNext}>Next Word</button>
+      </div>
       <div className="progress">Word {currentNum} of {total} in current cycle</div>
       <div className="cycle-status">{pos + 1 > total ? 'Cycle complete! Starting new cycle.' : ''}</div>
     </div>

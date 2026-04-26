@@ -294,6 +294,15 @@ h2 {
   background: var(--primary);
   color: #fff;
 }
+.word-nav-controls {
+  display: flex;
+  gap: 0.7rem;
+  justify-content: center;
+  margin-bottom: 1.2rem;
+}
+.word-nav-controls .next-btn {
+  margin-bottom: 0;
+}
 .clear-wrong-btn {
   padding: 0.6rem 1.3rem;
   background: var(--bg);
@@ -334,5 +343,8 @@ h2 {
   .main-nav button {
     padding: 0.6rem 1rem;
     font-size: 1rem;
+  }
+  .word-nav-controls {
+    flex-direction: column;
   }
 }
