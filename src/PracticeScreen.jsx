@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { getWords, getCycle, saveCycle, getPosition, savePosition } from './storage';
 
 function shuffle(arr) {
@@ -19,47 +19,29 @@ function speakWord(word) {
 }
 
 function PracticeScreen() {
-  const [words, setWords] = useState([]);
-  const [cycle, setCycle] = useState([]);
-  const [pos, setPos] = useState(0);
+  const [words] = useState(() => getWords());
+  const [cycle, setCycle] = useState(() => {
+    const storedWords = getWords();
+    const storedCycle = getCycle();
+    if (!storedCycle || storedCycle.length !== storedWords.length || storedWords.length === 0) {
+      const newCycle = shuffle(storedWords);
+      saveCycle(newCycle);
+      savePosition(0);
+      return newCycle;
+    }
+    return storedCycle;
+  });
+  const [pos, setPos] = useState(() => {
+    const storedWords = getWords();
+    const storedCycle = getCycle();
+    if (!storedCycle || storedCycle.length !== storedWords.length || storedWords.length === 0) {
+      return 0;
+    }
+    return getPosition();
+  });
   const [input, setInput] = useState('');
   const [status, setStatus] = useState('idle'); // idle, correct, incorrect
-  const [showAnswer, setShowAnswer] = useState(false);
   const inputRef = useRef();
-
-  // Load words, cycle, and position
-  useEffect(() => {
-    const w = getWords();
-    setWords(w);
-    let c = getCycle();
-    let p = getPosition();
-    // If no cycle or cycle is invalid, create new
-    if (!c || c.length !== w.length || w.length === 0) {
-      c = shuffle(w);
-      p = 0;
-      saveCycle(c);
-      savePosition(0);
-    }
-    setCycle(c);
-    setPos(p);
-    setInput('');
-    setStatus('idle');
-    setShowAnswer(false);
-  }, []);
-
-  // If words change, reset cycle
-  useEffect(() => {
-    if (words.length && (cycle.length !== words.length)) {
-      const c = shuffle(words);
-      setCycle(c);
-      setPos(0);
-      saveCycle(c);
-      savePosition(0);
-      setInput('');
-      setStatus('idle');
-      setShowAnswer(false);
-    }
-  }, [words]);
 
   if (!words.length) {
     return <div className="practice-screen"><h2>Practice Spelling</h2><p>Add words in Manage Words to start practicing.</p></div>;
@@ -76,10 +58,8 @@ function PracticeScreen() {
   const handleCheck = () => {
     if (input.trim().toLowerCase() === currentWord.toLowerCase()) {
       setStatus('correct');
-      setShowAnswer(false);
     } else {
       setStatus('incorrect');
-      setShowAnswer(true);
     }
   };
 
@@ -97,7 +77,6 @@ function PracticeScreen() {
     savePosition(nextPos);
     setInput('');
     setStatus('idle');
-    setShowAnswer(false);
     setTimeout(() => {
       speakWord(newCycle[nextPos]);
       inputRef.current && inputRef.current.focus();

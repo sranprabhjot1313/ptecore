@@ -122,6 +122,31 @@ h2 {
 .add-word-form button:hover {
   background: var(--primary-dark);
 }
+.pdf-import {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-bottom: 1rem;
+  padding: 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #f8fafc;
+  text-align: left;
+}
+.pdf-import label {
+  color: var(--primary-dark);
+  font-size: 0.98rem;
+  font-weight: 600;
+}
+.pdf-import input {
+  max-width: 100%;
+  color: var(--text-light);
+  font-size: 0.95rem;
+}
+.pdf-import input:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
 .words-list {
   list-style: none;
   padding: 0;
@@ -166,6 +191,11 @@ h2 {
 }
 .error-msg {
   color: var(--error);
+  margin-bottom: 0.7rem;
+  font-size: 1.01rem;
+}
+.import-msg {
+  color: var(--success);
   margin-bottom: 0.7rem;
   font-size: 1.01rem;
 }
